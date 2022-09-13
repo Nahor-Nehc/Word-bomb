@@ -120,7 +120,7 @@ def drawWin(state, buttons, user_prompt, user_input, time_left, lives, bombs, ex
     average = math.ceil((time_used//1000)/len(words_used)*100)/100
     text = INPUTFONT.render(f"Average time per word: {average} seconds", 1, WHITE)
     WIN.blit(text, (PADDING, PADDING*3+text.get_height()*2))
-    text = INPUTFONT.render(f"Average word length: {sum( map(len, words_used) ) / len(words_used)} characters", 1, WHITE)
+    text = INPUTFONT.render(f"Average word length: {int(sum( map(len, words_used) ) / len(words_used))} characters", 1, WHITE)
     WIN.blit(text, (PADDING, PADDING*4+text.get_height()*3))
   buttons.draw(WIN)
   pygame.display.flip()
