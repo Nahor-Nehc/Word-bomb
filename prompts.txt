@@ -1,0 +1,208 @@
+A
+H
+I
+ABA
+ADA
+ADE
+AHA
+AHE
+AHO
+AKI
+ARA
+ARI
+ATE
+ATI
+ATO
+ATU
+AVA
+AVU
+BEM
+CIN
+ECA
+EDE
+EES
+EFA
+EGE
+ELA
+ELE
+ELI
+ELO
+ENA
+ENE
+ENO
+ENU
+EMA
+EPA
+ERO
+ERI
+ESE
+ETA
+ETE
+EVE
+IAM
+ICA
+IES
+ILI
+IRA
+IRI
+ISA
+ISI
+ITI
+LAG
+LAR
+LED
+LEG
+LES
+LIL
+LIN
+LOM
+LOT
+LUA
+LUO
+MOO
+NED
+NES
+OCO
+OHA
+ONI
+OMI
+OPI
+ORA
+ORE
+ORI
+PIC
+PIN
+REE
+RAE
+RER
+RET
+SAP
+SAS
+SES
+TER
+TAP
+TIN
+TOT
+UGA
+UIL
+ULA
+URI
+VAN
+AB
+AC
+AD
+AF (rare)
+AG
+AH (rare)
+AI (extremely rare)
+AK (rare)
+AL
+AM
+AN
+AP
+AR
+AS
+AT
+AV (rare)
+AW (rare)
+BA (rare)
+BE
+BI (uncommon)
+BL (rare)
+BO (rare)
+BU (very rare)
+CA
+CE
+CH (very rare)
+CI
+CO (uncommon)
+CU (very rare)
+DA
+DE
+DI (uncommon)
+DO (rare)
+EA
+EB
+EC
+ED
+EF
+EG (uncommon)
+EH (rare)
+EL
+EM
+EN
+EP
+ER
+ES
+ET
+EW (uncommon)
+FA
+FE
+FI (uncommon)
+FO (rare)
+HA
+HE
+HI
+HU (rare)
+IF (uncommon)
+IL
+IM (rare)
+IN
+IP (uncommon)
+IR
+IS
+IT
+IV (very rare)
+KA
+KE
+KI (rare)
+KO (very rare)
+LA
+LE
+LI
+LO (uncommon)
+LU (uncommon)
+MA
+ME (uncommon)
+MI (uncommon)
+MM (very rare)
+MO (uncommon)
+NA
+NE
+NI
+NN (very rare)
+NO
+OD
+OH (very rare)
+OO (rare)
+OP (rare)
+OR
+PA
+PE
+PI (uncommon)
+PO (rare)
+RA
+RE
+RI
+RO
+SA
+SE
+SI
+SO (uncommon)
+ST (extremely rare)
+SU
+TA
+TE
+TH (extremely rare)
+UD (rare)
+UM (rare)
+UR
+US
+UT (uncommon)
+VA (rare)
+VE
+VI (rare)
+VO (rare)
+WA (uncommon)
+WE (uncommon)
+WO (rare)
