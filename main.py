@@ -278,11 +278,4 @@ def main():
 
     drawWin(state, buttons, user_prompt, user_input, time_left, lives, bombs, explosion, words_used, time_used)
 
-# prompts = prompt()
-# t = dict(zip(prompts.get_prompts(), [0 for _ in range(0, len(prompts.get_prompts()))]))
-# print(t)
-# for i in range(10000):
-#   t[prompts.generate_prompt()] += 1
-# print(t)
-
 main()
