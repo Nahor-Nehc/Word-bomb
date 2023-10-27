@@ -21,19 +21,22 @@ MAX_LIVES = 5
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Word bomb")
 
+image_location = lambda string: os.path.join("images", string)
+sound_location = lambda string: os.path.join("sounds", string)
+
 # all of the images that are used in the game
-HEART = pygame.transform.scale(pygame.image.load("heart.png"), (70, 70))
-BOMB1 = pygame.transform.scale(pygame.image.load("bomb1.png"), (150, 150))
-BOMB2 = pygame.transform.scale(pygame.image.load("bomb2.png"), (150, 150))
+HEART = pygame.transform.scale(pygame.image.load(image_location("heart.png")), (70, 70))
+BOMB1 = pygame.transform.scale(pygame.image.load(image_location("bomb1.png")), (150, 150))
+BOMB2 = pygame.transform.scale(pygame.image.load(image_location("bomb2.png")), (150, 150))
 
 # all of the sounds that are used in the game
-EXPLOSION = pygame.mixer.Sound("explosion.mp3")
-TICK = pygame.mixer.Sound("tick tock.mp3")
+EXPLOSION = pygame.mixer.Sound(sound_location("explosion.mp3"))
+TICK = pygame.mixer.Sound(sound_location("tick tock.mp3"))
 TICK.set_volume(0.1)
-LOCKED = pygame.mixer.Sound("locked.mp3")
-BEEP = pygame.mixer.Sound("beep.mp3")
+LOCKED = pygame.mixer.Sound(sound_location("locked.mp3"))
+BEEP = pygame.mixer.Sound(sound_location("beep.mp3"))
 BEEP.set_volume(0.3)
-ERROR = pygame.mixer.Sound("error.mp3")
+ERROR = pygame.mixer.Sound(sound_location("error.mp3"))
 ERROR.set_volume(0.2)
 
 # general colours
@@ -79,27 +82,29 @@ class dictionary:
     return self.words
   
   def search_word(self, text:str) -> bool:
-    """Returns a bool value depending on if text is in the dictionary"""
+    """Returns a bool value depending on if argument text is in the dictionary"""
     text = text.lower()
     for word in self.words:
       if text == word:
         return True
     return False
 
-
 class prompt:
   """This class holds all possible prompts"""
   def __init__(self):
     with open("prompts.txt") as p:
       self.prompts = p.read()
+      
       # removes any bracketed information
-      self.prompts = re.sub("[\(\[].*?[\)\]]", "", self.prompts)
+      self.prompts = re.sub("[\(\[].*?[\)\]]", "", self.prompts) # i have no idea what this function is doing :/
       self.prompts = self.prompts.split("\n")
+      
       #removes whitespace
       for prompt in range(len(self.prompts)):
         self.prompts[prompt] = self.prompts[prompt].strip()
       
   def get_prompts(self) -> list:
+    """returns all possible prompts"""
     return self.prompts
   
   def generate_prompt(self) -> str:
@@ -108,8 +113,9 @@ class prompt:
 
 
 def drawWin(state:str, buttons:tools.Button, user_prompt:str, user_input:str, time_left:int, lives:int, bombs:tools.Animation, explosion:tools.Animation, words_used:list, time_used:int):
-  """Any changes to the window is added in this function"""
-  pygame.draw.rect(WIN, DGREY, pygame.Rect(0, 0, WIDTH, HEIGHT))
+  """Any changes to the window ("drawing") is done in this function"""
+  
+  pygame.draw.rect(WIN, DGREY, pygame.Rect(0, 0, WIDTH, HEIGHT)) # blank canvas
   
   if state == "game":
     # displays user prompt
@@ -139,7 +145,7 @@ def drawWin(state:str, buttons:tools.Button, user_prompt:str, user_input:str, ti
     
   if state == "end":
     
-    # displays any statistics gathered over the course of the game
+    # displays all statistics gathered over the course of the game
     text = INPUTFONT.render(f"Number of words used: {len(words_used)}", 1, WHITE)
     WIN.blit(text, (PADDING, PADDING))
     text = INPUTFONT.render(f"Time used: {time_used//1000} seconds", 1, WHITE)
@@ -170,14 +176,27 @@ def main():
   prompts = prompt()
   dict = dictionary()
   
+  # creates animation class for the bomb which alternates between a) 2 images b) slowly
   bombs = tools.Animation(WIDTH/2 - 75 - PADDING*0.8, 100, "image")
+  
+  # a
   bombs.add_frame(BOMB1)
   bombs.add_frame(BOMB2)
+  
+  # b
   bombs.duplicate_all_frames(10)
   
+  # creates animation class for the explosion which is a sequence of a) 9 images b) quickly
   explosion = tools.Animation(WIDTH/2 - 150, 75, frame_type="image")
-  explosion.set_frames([pygame.transform.scale(pygame.image.load(os.path.join("explosion", str(x) + ".png")), (300, 300)) for x in range(4, 13)])
-  explosion.set_offsets([[0, 0] for i in range(4, 13)])
+  
+  # a
+  explosion.set_frames(
+    [pygame.transform.scale( # ensures all correct size
+      pygame.image.load(os.path.join("explosion", str(x) + ".png")), # loads images
+      (300, 300)) for x in range(4, 13)]) # for all frames
+  explosion.set_offsets([[0, 0] for _ in range(4, 13)])
+  
+  # b
   explosion.duplicate_all_frames(4)
   
   state = "menu"
@@ -241,22 +260,26 @@ def main():
               user_input = user_input[0:-1]
               
           if event.key == pygame.K_RETURN:
+            # checks if user got a valid word
             if dict.search_word(user_input) and (user_prompt in user_input) and (user_input not in words_used):
               pygame.event.post(pygame.event.Event(GENERATE_PROMPT))
               pygame.event.post(pygame.event.Event(RESET_INPUT))
               time_left = INITIAL_TIME*1000
               words_used.append(user_input)
               BEEP.play()
-              
+            
+            # checks if the word has already been used
             elif user_input in words_used:
               LOCKED.play()
               pygame.event.post(pygame.event.Event(RESET_INPUT))
-              
+            
+            # else, the word was not in the dictionary and therefore not a valid word
             else:
               ERROR.play()
               pygame.event.post(pygame.event.Event(RESET_INPUT))
 
       elif event.type == START:
+        # resets the stats and prompts
         user_prompt = ""
         user_input = ""
         
@@ -288,10 +311,11 @@ def main():
           
           buttons.toggleVis(menu_rect)
           
+          # ends animations
           bombs.stop()
           explosion.set_current_frame(0)
           explosion.stop()
-          TICK.stop()
+          TICK.stop() # TICK is set to repeat continually so has to be told to stop playing
         else:
           pygame.event.post(pygame.event.Event(PLAY_EXPLOSION))
           pygame.event.post(pygame.event.Event(GENERATE_PROMPT))
@@ -307,6 +331,5 @@ def main():
         buttons.toggleVis(start_rect)
 
     drawWin(state, buttons, user_prompt, user_input, time_left, lives, bombs, explosion, words_used, time_used)
-
 
 main()
